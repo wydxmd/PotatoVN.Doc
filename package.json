@@ -1,8 +1,10 @@
 {
   "scripts": {
-    "docs:dev": "vitepress dev",
-    "docs:build": "vitepress build",
-    "docs:preview": "vitepress preview"
+    "dev": "vitepress dev",
+    "build": "vitepress build",
+    "preview": "vitepress preview",
+    "serve": "vitepress serve",
+    "start": "vitepress dev"
   },
   "dependencies": {
     "@giscus/vue": "^3.0.0",
