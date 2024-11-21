@@ -18,6 +18,10 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+          
+      - name: 获取所有分支
+        run: |
+          git fetch --all
 
       - name: 创建新分支 'stackblitz-pr' 基于 'main'
         run: |
@@ -26,9 +30,8 @@ jobs:
       
       - name: 从 'stackblitz' 分支 cherry-pick 提交（排除指定提交）
         run: |
-          git fetch origin stackblitz
           # 获取 'stackblitz' 分支相对于 'main' 的提交ID，按时间顺序从旧到新排序
-          CHERRY_COMMITS=$(git log --reverse --no-merges --pretty=format:"%H" main..origin/stackblitz | grep -v 6c76e6dbf89a0c62bfdd63c79397c051d55148e2)
+          CHERRY_COMMITS=$(git log --reverse --no-merges --pretty=format:"%H" origin/main..origin/stackblitz | grep -v 6c76e6dbf89a0c62bfdd63c79397c051d55148e2)
           for commit in $CHERRY_COMMITS; do
           git cherry-pick $commit || (git cherry-pick --abort && exit 1)
           done
