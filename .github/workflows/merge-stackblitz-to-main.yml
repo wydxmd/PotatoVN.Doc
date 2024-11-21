@@ -1,46 +1,62 @@
-﻿name: Merge stackblitz into main excluding specific commit
+﻿name: Merge stackblitz branch to main
 
 on:
   push:
     branches:
       - stackblitz
+        
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  merge:
+  merge_branch:
     if: ${{ github.actor != 'github-actions[bot]' }}
     runs-on: ubuntu-latest
     steps:
-      - name: 检出仓库代码
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # 获取所有历史记录
+          fetch-depth: 0
+          ref: main
+          
+      - name: 获取所有分支
+        run: |
+          git fetch --all
 
+      - name: 创建新分支 'stackblitz-pr' 基于 'main'
+        run: |
+          git push origin --delete stackblitz-pr || true
+          git checkout -b stackblitz-pr
+          
       - name: 设置 Git 用户信息
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-
-      - name: 获取 main 分支
-        run: git fetch origin main
-
-      - name: 创建新的分支用于合并
-        run: git checkout -b stackblitz-merge origin/main
-
-      - name: 合并 stackblitz 分支
+          git config user.name "github-actions[bot]"
+          git config user.email "actions@github.com"
+      
+      - name: 从 'stackblitz' 分支 cherry-pick 提交（排除指定提交）
         run: |
-          git merge --no-commit --no-ff origin/stackblitz
-          # 撤销stackblitz分支上的专有提交（关闭git change log的提交）
-          git revert 6c76e6dbf89a0c62bfdd63c79397c051d55148e2 --no-edit
-          # 提交合并结果
-          git commit -m "Merge stackblitz change into main"
+          # 获取 'stackblitz' 分支相对于 'main' 的提交ID，按时间顺序从旧到新排序
+          CHERRY_COMMITS=$(git log --reverse --no-merges --pretty=format:"%H" origin/main..origin/stackblitz | grep -v 6c76e6dbf89a0c62bfdd63c79397c051d55148e2)
+          echo "CHERRY_COMMITS: $CHERRY_COMMITS"
+          for commit in $CHERRY_COMMITS; do
+          git cherry-pick $commit || git cherry-pick --skip
+          done
+      
+      - name: 推送新分支
+        run: |
+          git push origin stackblitz-pr
 
-      - name: 推送合并分支到远程仓库
-        run: git push origin stackblitz-merge
-
-      - name: 创建 Pull Request
-        uses: peter-evans/create-pull-request@v5
+      - name: Create pull request
+        uses: actions/github-script@v6
         with:
-          branch: stackblitz-merge
-          base: main
-          title: '合并 stackblitz 到 main'
-          body: '这是一个自动合并请求，请检查合并结果。'
+          github-token: ${{ secrets.REPOSITORY_TOKEN }}
+          script: |
+            github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'Merge stackblitz branch to main',
+              head: 'stackblitz-pr',
+              base: 'main',
+              body: '该 PR 由 GitHub Actions 自动创建，用于合并 stackblitz 分支到 main 分支，请检查是否正确。',
+            })
