@@ -37,7 +37,7 @@ jobs:
       - name: Setup Dependencies And Build
         run: |
           npm install
-          npm run docs:build
+          npm run build
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -50,7 +50,7 @@ jobs:
 
       - name: Build & Push Docker image
         run: |
-          cd GalgameManager.Doc/.vitepress/dist
+          cd .vitepress/dist
           docker build --tag goldenpotato137/potatovn.net:latest .
           docker push goldenpotato137/potatovn.net:latest
 
