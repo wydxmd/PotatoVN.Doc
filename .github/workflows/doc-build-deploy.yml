@@ -27,6 +27,7 @@ jobs:
         uses: actions/checkout@master
         with: 
           fetch-depth: '0'
+          ref: main
 
       - name: Setup Node.js 10.x
         uses: actions/setup-node@master
@@ -35,7 +36,6 @@ jobs:
 
       - name: Setup Dependencies And Build
         run: |
-          cd GalgameManager.Doc/
           npm install
           npm run docs:build
 
