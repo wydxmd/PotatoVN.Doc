@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
           
@@ -57,5 +57,5 @@ jobs:
               title: 'Merge stackblitz branch to main',
               head: 'stackblitz-pr',
               base: 'main',
-              body: 'This PR merges the stackblitz branch to main, excluding commit 6c76e6dbf89a0c62bfdd63c79397c051d55148e2.'
+              body: '该 PR 由 GitHub Actions 自动创建，用于合并 stackblitz 分支到 main 分支，请检查是否正确。',
             })
