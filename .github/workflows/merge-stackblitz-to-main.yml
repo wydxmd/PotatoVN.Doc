@@ -37,8 +37,9 @@ jobs:
         run: |
           # 获取 'stackblitz' 分支相对于 'main' 的提交ID，按时间顺序从旧到新排序
           CHERRY_COMMITS=$(git log --reverse --no-merges --pretty=format:"%H" origin/main..origin/stackblitz | grep -v 6c76e6dbf89a0c62bfdd63c79397c051d55148e2)
+          echo "CHERRY_COMMITS: $CHERRY_COMMITS"
           for commit in $CHERRY_COMMITS; do
-          git cherry-pick $commit || (git cherry-pick --abort && exit 1)
+          git cherry-pick $commit || git cherry-pick --skip
           done
       
       - name: 推送新分支
