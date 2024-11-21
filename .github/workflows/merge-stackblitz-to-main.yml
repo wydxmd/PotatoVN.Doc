@@ -11,8 +11,8 @@ permissions:
 
 jobs:
   merge_branch:
+    if: ${{ github.actor != 'github-actions[bot]' }}
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -27,6 +27,11 @@ jobs:
         run: |
           git push origin --delete stackblitz-pr || true
           git checkout -b stackblitz-pr
+          
+      - name: 设置 Git 用户信息
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "actions@github.com"
       
       - name: 从 'stackblitz' 分支 cherry-pick 提交（排除指定提交）
         run: |
