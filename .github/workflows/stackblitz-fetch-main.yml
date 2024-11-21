@@ -1,0 +1,41 @@
+name: Merge main into stackblitz
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+        
+      - name: 设置 Git 用户信息
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: 获取所有分支
+        run: |
+          git fetch --all
+
+      - name: 切换到 stackblitz 分支
+        run: |
+          git checkout stackblitz
+
+      - name: 将 main 分支合并到 stackblitz 分支
+        run: |
+          git merge --no-edit main
+
+      - name: 推送更改到 stackblitz 分支
+        run: |
+          git push origin stackblitz
