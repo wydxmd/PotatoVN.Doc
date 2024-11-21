@@ -27,12 +27,10 @@ jobs:
         run: git checkout -b stackblitz-merge origin/main
 
       - name: 合并 stackblitz 分支
-        run: |
-          git merge --no-commit --no-ff origin/stackblitz
-          # 撤销stackblitz分支上的专有提交（关闭git change log的提交）
-          git revert 6c76e6dbf89a0c62bfdd63c79397c051d55148e2 --no-edit
-          # 提交合并结果
-          git commit -m "Merge stackblitz change into main"
+        run: git merge --no-ff origin/stackblitz -m "Merge stackblitz into main"
+
+      - name: # 撤销stackblitz分支上的专有提交（关闭git change log的提交）
+        run: git revert 6c76e6dbf89a0c62bfdd63c79397c051d55148e2 --no-edit
 
       - name: 推送合并分支到远程仓库
         run: git push origin stackblitz-merge
@@ -43,4 +41,4 @@ jobs:
           branch: stackblitz-merge
           base: main
           title: '合并 stackblitz 到 main'
-          body: '这是一个自动合并请求，请检查合并结果。'
+          body: '这是一个把 stackblitz 分支合并到 main 的自动 PR，请检查是否正确。'
