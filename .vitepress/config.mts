@@ -50,6 +50,10 @@ export default defineConfig({
     socialLinks: [
       { icon: 'github', link: 'https://github.com/GoldenPotato137/PotatoVN' }
     ],
+    editLink: {
+      pattern: 'https://pr.new/GoldenPotato137/PotatoVN.Doc/edit/stackblitz/:path',
+      text: '编辑本页面',
+    },
     docFooter: {
       prev: '上一页',
       next: '下一页',
