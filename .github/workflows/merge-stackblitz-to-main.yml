@@ -42,3 +42,4 @@ jobs:
           base: main
           title: '合并 stackblitz 到 main'
           body: '这是一个把 stackblitz 分支合并到 main 的自动 PR，请检查是否正确。'
+          token: ${{ secrets.REPOSITORY_TOKEN }}
