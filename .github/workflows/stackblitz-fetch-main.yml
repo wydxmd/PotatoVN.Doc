@@ -10,8 +10,8 @@ permissions:
 
 jobs:
   merge:
+    if: ${{ github.actor != 'github-actions[bot]' }}
     runs-on: ubuntu-latest
-
     steps:
       - name: 检出代码
         uses: actions/checkout@v3

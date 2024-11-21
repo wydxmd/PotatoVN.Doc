@@ -1,0 +1,46 @@
+﻿name: Merge stackblitz into main excluding specific commit
+
+on:
+  push:
+    branches:
+      - stackblitz
+
+jobs:
+  merge:
+    if: ${{ github.actor != 'github-actions[bot]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: 检出仓库代码
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # 获取所有历史记录
+
+      - name: 设置 Git 用户信息
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: 获取 main 分支
+        run: git fetch origin main
+
+      - name: 创建新的分支用于合并
+        run: git checkout -b stackblitz-merge origin/main
+
+      - name: 合并 stackblitz 分支
+        run: |
+          git merge --no-commit --no-ff origin/stackblitz
+          # 撤销stackblitz分支上的专有提交（关闭git change log的提交）
+          git revert 6c76e6dbf89a0c62bfdd63c79397c051d55148e2 --no-edit
+          # 提交合并结果
+          git commit -m "Merge stackblitz change into main"
+
+      - name: 推送合并分支到远程仓库
+        run: git push origin stackblitz-merge
+
+      - name: 创建 Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: stackblitz-merge
+          base: main
+          title: '合并 stackblitz 到 main'
+          body: '这是一个自动合并请求，请检查合并结果。'
