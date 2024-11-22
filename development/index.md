@@ -18,7 +18,9 @@
 
 文档是用户了解和使用产品的第一步。加入我们，帮助完善文档。无论是添加新的内容，还是更新现有信息，您的贡献都是极其宝贵的。
 
-本文档是由 [VitePress](https://vitepress.vuejs.org/) 构建的，要编写文档，只需使用 Markdown 语法即可。
+本文档是由 [VitePress](https://vitepress.vuejs.org/) 构建的。要编写文档，只需拥有一个[Github账号](https://github.com/signup?ref_cta=Sign+up&ref_loc=header+logged+out&ref_page=%2F&source=header-home)，使用简单 Markdown 语法即可。
+
+试试[编辑本页](https://pr.new/GoldenPotato137/PotatoVN.Doc/edit/stackblitz/development/index.md?initialPath=development%2Findex.html)！
 
 ## :computer: 客户端开发
 
