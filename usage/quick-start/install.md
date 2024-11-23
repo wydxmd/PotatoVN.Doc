@@ -13,6 +13,10 @@ PotatoVN 目前仅支持以`msix`包格式安装，免安装版还在路上（co
 
 若上按钮没有生效，您可以点击[这里](https://www.microsoft.com/store/apps/9P9CBKD5HR3W)跳转微软应用商店。
 
+## 测载版安装
+
+> to be done
+
 ## 手动安装
 
 手动安装本质是从微软商店获取安装包后自行安装。
