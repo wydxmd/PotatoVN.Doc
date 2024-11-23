@@ -53,7 +53,7 @@ jobs:
           github-token: ${{ secrets.REPOSITORY_TOKEN }}
           script: |
             github.rest.pulls.create({
-              owner: "github-actions[bot]",
+              owner: 'github-actions',
               repo: context.repo.repo,
               title: 'Merge stackblitz branch to main',
               head: 'stackblitz-pr',
