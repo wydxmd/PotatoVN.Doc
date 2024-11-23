@@ -12,7 +12,7 @@ export default defineConfig({
   vite: {
     plugins: [
       GitChangelog({
-        repoURL: () => 'https://github.com/GoldenPotato137/PotatoVN',
+        repoURL: () => 'https://github.com/GoldenPotato137/PotatoVN.Doc',
       }),
       GitChangelogMarkdownSection(),
     ],
