@@ -1,6 +1,6 @@
 # PotatoVN.Doc
 
-> potatovn.net 的源代码
+> [potatovn.net](https://potatovn.net) 的源代码
 
 ## 本地运行
 1. 确保你的电脑上已经安装了 [Node.js](https://nodejs.org/zh-cn/)
