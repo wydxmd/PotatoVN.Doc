@@ -45,6 +45,7 @@ export default defineConfig({
       { text: '主页', link: '/' },
       { text: '使用指北', link: '/usage/how-to-use/brief' },
       { text: '一起开发', link: '/development' },
+      { text: '更新日志', link: '/upgrade-log' },
     ],
     search: { provider: 'local' },
     sidebar: SideBar,

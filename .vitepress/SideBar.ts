@@ -16,6 +16,13 @@ const vitepressSidebarOptions: Options[] = [
         sortMenusByFrontmatterOrder: true,
         collapseDepth: 2,
     },
+    {
+        scanStartPath : 'upgrade-log',
+        resolvePath : '/upgrade-log/',
+        useTitleFromFileHeading: true,
+        useFolderTitleFromIndexFile: true,
+        sortMenusByFrontmatterOrder: true,
+    },
 ];
 
 export default generateSidebar(vitepressSidebarOptions);
